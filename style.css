@@ -34,7 +34,7 @@ img, video { display: block; max-width: 100%; }
   margin: 0 auto;
 }
 .paper-hero h1 {
-  max-width: 1500px;
+  max-width: 1380px;
   margin: 0 auto;
   color: #303033;
   font-size: clamp(2.45rem, 4.6vw, 5rem);
@@ -216,7 +216,7 @@ footer a { color: #4c78c9; font-weight: 600; }
 
 @media (max-width: 760px) {
   .paper-hero { padding-top: 46px; }
-  .paper-hero h1 { font-size: clamp(2.25rem, 10vw, 3.8rem); line-height: 1.08; }
+  .paper-hero h1 { font-size: clamp(2rem, 9vw, 3.15rem); line-height: 1.1; }
   .authors { margin-top: 24px; }
   .teaser-section { padding-bottom: 62px; }
   .content-section { padding: 65px 0; }
