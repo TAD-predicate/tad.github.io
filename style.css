@@ -1,13 +1,13 @@
 :root {
 --ink: #2f3033;
 --muted: #667085;
---blue: #2396ee;
+--blue: #3d7fe8;
 --line: #e7e9ee;
 --paper: #ffffff;
 --gray: #f6f7f9;
 --pill: #343434;
---invariant: #1e9b70;
---directional: #e97842;
+--invariant: #20242b;
+--directional: #3d7fe8;
 --page-width: 1240px;
 --content-width: 1120px;
 }
@@ -44,7 +44,7 @@ HERO
 ========================================================= */
 
 .paper-hero {
-padding: 48px 20px 22px;
+padding: 38px 20px 18px;
 text-align: center;
 background: #ffffff;
 }
@@ -55,18 +55,18 @@ margin: 0 auto;
 }
 
 .paper-hero h1 {
-max-width: 1320px;
+max-width: 1180px;
 margin: 0 auto;
 color: #303033;
-font-size: clamp(2rem, 3.25vw, 3.65rem);
+font-size: clamp(1.85rem, 2.65vw, 3.15rem);
 font-weight: 700;
-letter-spacing: -0.045em;
-line-height: 1.1;
+letter-spacing: -0.04em;
+line-height: 1.12;
 }
 
 .authors {
 max-width: 1320px;
-margin: 26px auto 8px;
+margin: 24px auto 8px;
 color: var(--blue);
 font-size: clamp(1rem, 1.85vw, 1.38rem);
 font-weight: 500;
@@ -150,19 +150,33 @@ box-shadow: 0 16px 34px rgba(33, 39, 48, 0.11);
 .results-note {
 max-width: 970px;
 margin: 14px auto 0;
-color: var(--muted);
+color: #747b89;
 text-align: center;
 font-size: 0.98rem;
+font-weight: 500;
+}
+
+.yaw-text {
+color: #4e5664;
+font-weight: 700;
 }
 
 .invariant-text {
-color: var(--invariant);
-font-weight: 700;
+color: #20242b;
+font-weight: 600;
+}
+
+.invariant-text strong {
+font-weight: 800;
 }
 
 .directional-text {
-color: var(--directional);
-font-weight: 700;
+color: #3d7fe8;
+font-weight: 600;
+}
+
+.directional-text strong {
+font-weight: 800;
 }
 
 /* =========================================================
@@ -345,13 +359,13 @@ MOBILE
 
 @media (max-width: 760px) {
 .paper-hero {
-padding-top: 38px;
+padding-top: 34px;
 }
 
 .paper-hero h1 {
-font-size: clamp(1.9rem, 8vw, 2.85rem);
+font-size: clamp(1.8rem, 7.5vw, 2.65rem);
 line-height: 1.12;
-letter-spacing: -0.04em;
+letter-spacing: -0.035em;
 }
 
 .authors {
