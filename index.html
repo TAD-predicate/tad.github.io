@@ -1048,68 +1048,55 @@
     </section>
 
     <!-- Overview -->
-    <section class="tad-section" id="overview">
+   <section class="tad-section" id="overview">
       <div class="tad-shell">
         <div class="section-heading">
-          <p class="section-kicker">Overview</p>
-          <h2>A predicate-level framework for robust 3D scene graph generation.</h2>
+          <p class="section-kicker">CORE IDEA</p>
+          <h2>One scene, two transformation rules.</h2>
           <p>
-            TAD models the fact that different 3D predicates exhibit different transformation
-            behaviors under yaw viewpoint changes.
+            A viewpoint change does not affect every scene relation in the same way.
+            TAD explicitly models the different transformation behaviors of directional
+            and viewpoint-invariant predicates.
           </p>
         </div>
-
-        <div class="overview-grid">
-          <article class="overview-card">
-            <h3>Why viewpoint robustness matters</h3>
+    
+        <div class="overview-rule-grid">
+          <article class="overview-rule-card viewpoint-card">
+            <div class="overview-rule-icon">01</div>
+            <h3>Observation frame rotates</h3>
             <p>
-              Embodied agents and AR systems may observe the same indoor scene from different
-              yaw viewpoints. A robust 3D scene graph model should not treat all relation labels
-              as if they were fixed under viewpoint changes. Directional predicates should rotate
-              with the observation frame, while physical and semantic relations should remain stable.
-              TAD addresses this conflict by separating invariant and direction-sensitive relation
-              reasoning before merging the two factors for unified predicate prediction.
+              The same physical 3D scene can be observed from different yaw viewpoints,
+              changing the horizontal reference frame used to describe object relations.
             </p>
           </article>
-
-          <article class="overview-card">
-            <h3>Core contributions</h3>
-
-            <ul class="contribution-list">
-              <li>
-                <span class="contribution-index">1</span>
-                <div>
-                  <h4>Predicate-level transformation analysis</h4>
-                  <p>
-                    We identify transformation heterogeneity as a key obstacle for viewpoint-robust
-                    3D scene graph generation.
-                  </p>
-                </div>
-              </li>
-
-              <li>
-                <span class="contribution-index">2</span>
-                <div>
-                  <h4>Transformation-aware decoupling</h4>
-                  <p>
-                    TAD separates invariant and directional relation reasoning with specialized
-                    descriptors, branches, and training objectives.
-                  </p>
-                </div>
-              </li>
-
-              <li>
-                <span class="contribution-index">3</span>
-                <div>
-                  <h4>Robust predictions without rotation augmentation</h4>
-                  <p>
-                    The model maintains strong performance across yaw viewpoints while preserving
-                    competitive standard 3DSGG performance.
-                  </p>
-                </div>
-              </li>
-            </ul>
+    
+          <article class="overview-rule-card directional-card">
+            <div class="overview-rule-icon">02</div>
+            <h3>Directional relations transform</h3>
+            <p>
+              Relations such as
+              <span class="directional-blue">left, right, front, and behind</span>
+              should change consistently with the current observation frame.
+            </p>
           </article>
+    
+          <article class="overview-rule-card invariant-card">
+            <div class="overview-rule-icon">03</div>
+            <h3>Invariant relations stay stable</h3>
+            <p>
+              Relations such as
+              <span class="invariant-black">standing on and attached to</span>
+              describe physical or semantic structure and should remain stable across viewpoints.
+            </p>
+          </article>
+        </div>
+    
+        <div class="overview-tad-callout">
+          <div class="overview-tad-label">TAD</div>
+          <p>
+            Transformation-Aware Decoupling separates directional and invariant relation reasoning,
+            then merges both factors for unified 3D scene graph prediction.
+          </p>
         </div>
       </div>
     </section>
