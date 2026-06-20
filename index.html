@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Transformation-Aware Decoupling for Viewpoint-Robust 3D Scene Graph Generation." />
+  <title>TAD: Not All Relations Rotate Alike</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <main>
+    <!-- HERO -->
+    <section class="paper-hero" id="top">
+      <div class="hero-content">
+        <h1>
+          Not All Relations Rotate Alike:<br />
+          Transformation-Aware Decoupling for<br />
+          Viewpoint-Robust 3D Scene Graph Generation
+        </h1>
+
+        <!-- Replace names, links, and superscripts after anonymous review. -->
+        <p class="authors">
+          <a href="#">Anonymous Author 1</a><sup>1</sup>,
+          <a href="#">Anonymous Author 2</a><sup>1</sup>,
+          <a href="#">Anonymous Author 3</a><sup>2</sup>,
+          <a href="#">Anonymous Author 4</a><sup>1,2</sup>
+        </p>
+
+        <p class="affiliations">
+          <sup>1</sup>Anonymous Institution &nbsp;&nbsp;
+          <sup>2</sup>Anonymous Institution
+        </p>
+
+        <div class="hero-links">
+          <a class="link-pill" href="assets/pdf/paper.pdf">📄 Paper</a>
+          <a class="link-pill" href="https://github.com/YOUR-ACCOUNT/YOUR-REPO">⌘ Code</a>
+          <a class="link-pill" href="#">↗ arXiv</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FULL-WIDTH TEASER VIDEO: assets/demos/hero.mp4 -->
+    <section class="teaser-section">
+      <div class="wide-container">
+        <video class="teaser-video" autoplay muted loop playsinline controls preload="metadata"
+               poster="assets/figures/hero-poster.jpg">
+          <source src="assets/demos/hero.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <p class="media-caption">
+          Same physical scene under different yaw viewpoints:
+          <span class="invariant-text">yaw-invariant predicates remain stable</span>,
+          while <span class="directional-text">directional predicates transform with the observation frame</span>.
+        </p>
+      </div>
+    </section>
+
+    <!-- MOTIVATION LONG FIGURE: assets/figures/motivation-long.png -->
+    <section class="content-section" id="motivation">
+      <div class="container">
+        <div class="section-title">
+          <p class="kicker">MOTIVATION</p>
+          <h2>Not all relations rotate alike.</h2>
+          <p>
+            Directional predicates should change with the observation frame, while approximately
+            yaw-invariant predicates should remain stable.
+          </p>
+        </div>
+        <figure class="long-figure">
+          <img src="assets/figures/motivation-long.png"
+               alt="Motivation illustration of invariant and directional predicates under yaw rotations" />
+        </figure>
+      </div>
+    </section>
+
+    <!-- METHOD LONG FIGURE: assets/figures/method-long.png -->
+    <section class="content-section section-gray" id="method">
+      <div class="container">
+        <div class="section-title">
+          <p class="kicker">METHOD</p>
+          <h2>Transformation-Aware Decoupling.</h2>
+          <p>
+            TAD separates invariant and direction-sensitive relation reasoning while retaining
+            unified multi-label predicate prediction.
+          </p>
+        </div>
+        <figure class="long-figure">
+          <img src="assets/figures/method-long.png"
+               alt="Transformation-Aware Decoupling method diagram" />
+        </figure>
+      </div>
+    </section>
+
+    <!-- TWO SIDE-BY-SIDE DEMOS:
+         assets/demos/scene-01.mp4
+         assets/demos/scene-02.mp4 -->
+    <section class="content-section" id="demos">
+      <div class="container">
+        <div class="section-title">
+          <p class="kicker">DEMONSTRATIONS</p>
+          <h2>Consistent scene graphs across yaw viewpoints.</h2>
+          <p>
+            Two qualitative cases comparing the same scene under rotated observation frames.
+          </p>
+        </div>
+        <div class="demo-grid">
+          <article class="demo-card">
+            <h3>Case 1</h3>
+            <video class="demo-video" autoplay muted loop playsinline controls preload="metadata"
+                   poster="assets/figures/scene-01-poster.jpg">
+              <source src="assets/demos/scene-01.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+            <p>Replace this caption with one sentence explaining the key relations in this case.</p>
+          </article>
+
+          <article class="demo-card">
+            <h3>Case 2</h3>
+            <video class="demo-video" autoplay muted loop playsinline controls preload="metadata"
+                   poster="assets/figures/scene-02-poster.jpg">
+              <source src="assets/demos/scene-02.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+            <p>Replace this caption with one sentence describing a different scene or a baseline failure.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTS LONG TABLE/IMAGE: assets/figures/results-table.png -->
+    <section class="content-section section-gray" id="results">
+      <div class="container">
+        <div class="section-title">
+          <p class="kicker">RESULTS</p>
+          <h2>Robust under evaluated yaw viewpoints.</h2>
+          <p>
+            TAD improves relation robustness without training-time rotation augmentation while
+            maintaining strong standard-benchmark performance.
+          </p>
+        </div>
+        <figure class="long-figure results-figure">
+          <img src="assets/figures/results-table.png"
+               alt="Quantitative comparison under standard and yaw-rotated viewpoints" />
+        </figure>
+        <p class="results-note">
+          Suggested one-line takeaway: TAD reduces the performance drop under 90° axis exchange
+          while preserving canonical-view accuracy.
+        </p>
+      </div>
+    </section>
+
+    <!-- CITATION -->
+    <section class="content-section citation-section" id="citation">
+      <div class="container citation-container">
+        <div class="section-title">
+          <p class="kicker">CITATION</p>
+          <h2>Use TAD in your work.</h2>
+        </div>
+        <div class="bibtex-wrap">
+          <button id="copy-bibtex" type="button">Copy BibTeX</button>
+          <pre id="bibtex">@inproceedings{tad_3dsgg_2026,
+  title     = {Not All Relations Rotate Alike:
+               Transformation-Aware Decoupling for
+               Viewpoint-Robust 3D Scene Graph Generation},
+  author    = {Anonymous Authors},
+  booktitle = {AAAI},
+  year      = {2026}
+}</pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> TAD Project Page</p>
+    <a href="#top">Back to top ↑</a>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
