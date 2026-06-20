@@ -8,419 +8,856 @@
     name="description"
     content="Transformation-Aware Decoupling for Viewpoint-Robust 3D Scene Graph Generation."
   />
+  <meta name="theme-color" content="#101828" />
   <title>TAD: Not All Relations Rotate Alike</title>
-
-  <link rel="stylesheet" href="style.css" />
-
-  <!-- Extra styles for the new project-page sections.
-       These are intentionally kept here so that index.html can be replaced directly. -->
 
   <style>
     :root {
-      --tad-ink: #20252b;
-      --tad-muted: #667085;
-      --tad-line: #e7eaee;
-      --tad-bg: #ffffff;
-      --tad-soft-bg: #f7f8fa;
-      --tad-invariant: #1f9d70;
-      --tad-directional: #e97842;
-      --tad-blue: #4b76d1;
-      --tad-shadow: 0 12px 30px rgba(31, 38, 48, 0.07);
+      --ink: #162033;
+      --ink-soft: #263449;
+      --muted: #667085;
+      --muted-light: #98a2b3;
+      --line: #e7ebf0;
+      --paper: #ffffff;
+      --soft: #f7f9fc;
+      --soft-blue: #f2f6ff;
+      --soft-green: #f0fbf6;
+      --blue: #4f6fe8;
+      --blue-deep: #294bcf;
+      --green: #1f9d70;
+      --orange: #e67f4d;
+      --shadow-sm: 0 8px 24px rgba(21, 31, 48, 0.06);
+      --shadow-md: 0 18px 44px rgba(21, 31, 48, 0.10);
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
     }
 
-    .project-note {
-      max-width: 900px;
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body.tad-page {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family:
+        Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body.tad-page a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .tad-page main {
+      overflow: hidden;
+    }
+
+    .tad-shell {
+      width: min(1160px, calc(100% - 48px));
       margin: 0 auto;
-      color: var(--tad-muted);
+    }
+
+    /* Navigation */
+    .tad-nav {
+      position: fixed;
+      z-index: 100;
+      top: 0;
+      left: 0;
+      width: 100%;
+      border-bottom: 1px solid rgba(225, 231, 240, 0.85);
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .tad-nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: min(1160px, calc(100% - 48px));
+      min-height: 62px;
+      margin: 0 auto;
+    }
+
+    .tad-brand {
+      color: var(--ink);
+      font-size: 0.94rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+    }
+
+    .tad-brand span {
+      color: var(--blue);
+    }
+
+    .tad-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .tad-nav-links a {
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 650;
+      transition: color 0.2s ease;
+    }
+
+    .tad-nav-links a:hover {
+      color: var(--blue-deep);
+    }
+
+    /* Hero */
+    .tad-hero {
+      position: relative;
+      min-height: 620px;
+      padding: 160px 24px 110px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 16% 20%, rgba(79, 111, 232, 0.15), transparent 28%),
+        radial-gradient(circle at 85% 9%, rgba(31, 157, 112, 0.11), transparent 26%),
+        linear-gradient(180deg, #f8faff 0%, #ffffff 76%);
+    }
+
+    .tad-hero::before {
+      position: absolute;
+      z-index: 0;
+      top: 12%;
+      right: -140px;
+      width: 440px;
+      height: 440px;
+      border: 1px solid rgba(79, 111, 232, 0.14);
+      border-radius: 50%;
+      content: "";
+    }
+
+    .tad-hero::after {
+      position: absolute;
+      z-index: 0;
+      top: 20%;
+      right: -65px;
+      width: 285px;
+      height: 285px;
+      border: 1px dashed rgba(31, 157, 112, 0.22);
+      border-radius: 50%;
+      content: "";
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 980px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 22px;
+      padding: 7px 12px;
+      border: 1px solid rgba(79, 111, 232, 0.18);
+      border-radius: 999px;
+      color: var(--blue-deep);
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: 0 5px 16px rgba(79, 111, 232, 0.08);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.09em;
+    }
+
+    .hero-badge::before {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      content: "";
+    }
+
+    .tad-hero h1 {
+      max-width: 980px;
+      margin: 0 auto;
+      color: var(--ink);
+      font-size: clamp(2.2rem, 5vw, 4.25rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.055em;
+      text-wrap: balance;
+    }
+
+    .authors {
+      margin: 28px 0 6px;
+      color: var(--ink-soft);
+      font-size: 1.03rem;
+      font-weight: 650;
+    }
+
+    .affiliations {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .hero-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 31px;
+    }
+
+    .hero-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 17px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 5px 14px rgba(21, 31, 48, 0.05);
+      color: var(--ink);
+      font-size: 0.9rem;
+      font-weight: 750;
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .hero-link:hover {
+      transform: translateY(-2px);
+      border-color: rgba(79, 111, 232, 0.45);
+      box-shadow: 0 10px 22px rgba(79, 111, 232, 0.14);
+    }
+
+    .hero-link-primary {
+      border-color: var(--blue);
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%);
+    }
+
+    .hero-link-disabled {
+      cursor: default;
+      opacity: 0.62;
+    }
+
+    /* Teaser */
+    .teaser-section {
+      position: relative;
+      z-index: 2;
+      margin-top: -54px;
+      padding: 0 24px 82px;
+    }
+
+    .teaser-wrap {
+      width: min(1320px, 100%);
+      margin: 0 auto;
+      padding: 13px;
+      border: 1px solid rgba(223, 229, 238, 0.92);
+      border-radius: 26px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: var(--shadow-md);
+      backdrop-filter: blur(14px);
+    }
+
+    .teaser-video {
+      display: block;
+      width: 100%;
+      max-height: 720px;
+      border-radius: 17px;
+      background: #101828;
+      object-fit: cover;
+    }
+
+    .media-caption {
+      max-width: 900px;
+      margin: 16px auto 2px;
+      color: var(--muted);
+      font-size: 0.96rem;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    .invariant-text {
+      color: var(--green);
+      font-weight: 750;
+    }
+
+    .directional-text {
+      color: var(--orange);
+      font-weight: 750;
+    }
+
+    /* Sections */
+    .tad-section {
+      padding: 96px 0;
+    }
+
+    .tad-section-soft {
+      background: linear-gradient(180deg, #f8faff 0%, #f5f8fc 100%);
+    }
+
+    .section-heading {
+      max-width: 790px;
+      margin: 0 auto 42px;
+      text-align: center;
+    }
+
+    .section-kicker {
+      margin: 0 0 10px;
+      color: var(--blue);
+      font-size: 0.76rem;
+      font-weight: 850;
+      letter-spacing: 0.15em;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      color: var(--ink);
+      font-size: clamp(1.85rem, 3vw, 2.65rem);
+      font-weight: 800;
+      line-height: 1.18;
+      letter-spacing: -0.035em;
+      text-wrap: balance;
+    }
+
+    .section-heading p:not(.section-kicker) {
+      margin: 15px auto 0;
+      color: var(--muted);
+      font-size: 1.01rem;
+      line-height: 1.75;
+    }
+
+    /* Figures */
+    .figure-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: #ffffff;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .figure-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .figure-caption {
+      margin: 0;
+      padding: 17px 20px 18px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.65;
+    }
+
+    /* Method highlight cards */
+    .method-points {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .method-point {
+      min-height: 142px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: #ffffff;
+    }
+
+    .method-point-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      margin-bottom: 12px;
+      border-radius: 50%;
+      color: #ffffff;
+      background: var(--blue);
+      font-size: 0.82rem;
+      font-weight: 850;
+    }
+
+    .method-point h3 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 1rem;
+    }
+
+    .method-point p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.62;
+    }
+
+    /* Demonstrations */
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .demo-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: #ffffff;
+      box-shadow: var(--shadow-sm);
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+
+    .demo-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .demo-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 21px 22px 16px;
+    }
+
+    .demo-index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 36px;
+      height: 28px;
+      border-radius: 999px;
+      color: var(--blue-deep);
+      background: var(--soft-blue);
+      font-size: 0.74rem;
+      font-weight: 850;
+      letter-spacing: 0.06em;
+    }
+
+    .demo-header h3 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 1.1rem;
+      line-height: 1.35;
+    }
+
+    .demo-video-wrap {
+      padding: 0 12px;
+    }
+
+    .demo-video {
+      display: block;
+      width: 100%;
+      border-radius: 14px;
+      background: #101828;
+    }
+
+    .demo-card p {
+      margin: 0;
+      padding: 17px 22px 22px;
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.7;
+    }
+
+    /* Results */
+    .results-summary {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 26px;
+      align-items: stretch;
+      margin-bottom: 28px;
+    }
+
+    .results-lead {
+      position: relative;
+      overflow: hidden;
+      min-height: 100%;
+      padding: 31px;
+      border-radius: var(--radius-lg);
+      color: #ffffff;
+      background:
+        radial-gradient(circle at 95% 0%, rgba(255, 255, 255, 0.2), transparent 34%),
+        linear-gradient(135deg, #395de0 0%, #2542b7 100%);
+      box-shadow: 0 16px 38px rgba(41, 75, 207, 0.22);
+    }
+
+    .results-lead::after {
+      position: absolute;
+      right: -37px;
+      bottom: -48px;
+      width: 180px;
+      height: 180px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 50%;
+      content: "";
+    }
+
+    .results-lead-label {
+      margin: 0 0 12px;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+    }
+
+    .results-lead h3 {
+      position: relative;
+      z-index: 1;
+      max-width: 510px;
+      margin: 0;
+      color: #ffffff;
+      font-size: clamp(1.55rem, 2.8vw, 2.2rem);
+      line-height: 1.2;
+      letter-spacing: -0.035em;
+    }
+
+    .results-lead p {
+      position: relative;
+      z-index: 1;
+      max-width: 560px;
+      margin: 16px 0 0;
+      color: rgba(255, 255, 255, 0.86);
       font-size: 0.96rem;
       line-height: 1.7;
     }
 
-    .link-pill.is-disabled {
-      cursor: default;
-      opacity: 0.62;
-      pointer-events: none;
-    }
-
-    .key-idea-section {
-      padding-top: 76px;
-      padding-bottom: 76px;
-    }
-
-    .relation-grid {
+    .result-metrics {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 24px;
-      max-width: 980px;
-      margin: 34px auto 0;
-    }
-
-    .relation-card {
-      min-height: 260px;
-      padding: 28px;
-      border: 1px solid var(--tad-line);
-      border-radius: 18px;
-      background: var(--tad-bg);
-      box-shadow: var(--tad-shadow);
-    }
-
-    .relation-card.invariant-card {
-      border-top: 5px solid var(--tad-invariant);
-    }
-
-    .relation-card.directional-card {
-      border-top: 5px solid var(--tad-directional);
-    }
-
-    .relation-label {
-      margin: 0 0 10px;
-      color: var(--tad-muted);
-      font-size: 0.76rem;
-      font-weight: 750;
-      letter-spacing: 0.12em;
-    }
-
-    .relation-card h3 {
-      margin: 0;
-      color: var(--tad-ink);
-      font-size: 1.35rem;
-      line-height: 1.32;
-    }
-
-    .relation-card > p:last-child {
-      margin: 18px 0 0;
-      color: var(--tad-muted);
-      font-size: 0.95rem;
-      line-height: 1.72;
-    }
-
-    .relation-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 18px;
-    }
-
-    .relation-tags span {
-      padding: 6px 11px;
-      border: 1px solid var(--tad-line);
-      border-radius: 999px;
-      background: #fafbfc;
-      color: var(--tad-ink);
-      font-size: 0.84rem;
-      font-weight: 650;
-    }
-
-    .invariant-card .relation-tags span {
-      border-color: rgba(31, 157, 112, 0.35);
-    }
-
-    .directional-card .relation-tags span {
-      border-color: rgba(233, 120, 66, 0.38);
-    }
-
-    .transformation-strip {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      gap: 16px;
-      max-width: 820px;
-      margin: 34px auto 0;
-      padding: 22px;
-      border: 1px solid var(--tad-line);
-      border-radius: 16px;
-      background: #ffffff;
-      box-shadow: 0 8px 20px rgba(31, 38, 48, 0.04);
-    }
-
-    .transformation-example {
-      padding: 16px;
-      border-radius: 12px;
-      background: var(--tad-soft-bg);
-      text-align: center;
-    }
-
-    .transformation-example p {
-      margin: 0;
-      color: var(--tad-muted);
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .transformation-example strong {
-      display: block;
-      margin-top: 7px;
-      color: var(--tad-ink);
-      font-size: 1.18rem;
-    }
-
-    .transform-arrow {
-      color: var(--tad-directional);
-      font-size: 1.8rem;
-      font-weight: 800;
-    }
-
-    .demo-card h3 {
-      margin-bottom: 10px;
-    }
-
-    .demo-card p {
-      color: var(--tad-muted);
-      line-height: 1.72;
-    }
-
-    .results-summary {
-      max-width: 1020px;
-      margin: 32px auto 0;
-    }
-
-    .metric-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-      margin-bottom: 24px;
+      grid-template-columns: 1fr;
+      gap: 14px;
     }
 
     .metric-card {
-      padding: 22px 18px;
-      border: 1px solid var(--tad-line);
-      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 96px;
+      padding: 19px 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
       background: #ffffff;
-      box-shadow: var(--tad-shadow);
-      text-align: center;
+      box-shadow: var(--shadow-sm);
     }
 
-    .metric-label {
+    .metric-card-label {
       margin: 0;
-      color: var(--tad-muted);
-      font-size: 0.83rem;
+      color: var(--muted);
+      font-size: 0.84rem;
       font-weight: 750;
-      letter-spacing: 0.03em;
     }
 
-    .metric-value {
-      margin: 9px 0 3px;
-      color: var(--tad-ink);
-      font-size: clamp(1.45rem, 2.7vw, 2rem);
-      font-weight: 800;
+    .metric-card-value {
+      margin: 6px 0 0;
+      color: var(--ink);
+      font-size: 1.42rem;
+      font-weight: 850;
       letter-spacing: -0.04em;
     }
 
-    .metric-delta {
-      margin: 0;
-      color: var(--tad-invariant);
-      font-size: 0.9rem;
-      font-weight: 750;
+    .metric-card-delta {
+      flex: 0 0 auto;
+      padding: 6px 9px;
+      border-radius: 999px;
+      color: var(--green);
+      background: var(--soft-green);
+      font-size: 0.78rem;
+      font-weight: 850;
+      white-space: nowrap;
     }
 
-    .results-table-wrap {
+    .table-card {
       overflow-x: auto;
-      margin-top: 20px;
-      border: 1px solid var(--tad-line);
-      border-radius: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
       background: #ffffff;
-      box-shadow: 0 8px 22px rgba(31, 38, 48, 0.05);
+      box-shadow: var(--shadow-sm);
     }
 
-    .results-table {
+    .result-table {
       width: 100%;
-      min-width: 690px;
+      min-width: 720px;
       border-collapse: collapse;
       text-align: center;
-      font-size: 0.93rem;
     }
 
-    .results-table th,
-    .results-table td {
-      padding: 15px 14px;
-      border-bottom: 1px solid var(--tad-line);
+    .result-table th,
+    .result-table td {
+      padding: 16px 15px;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.91rem;
     }
 
-    .results-table th {
-      color: var(--tad-muted);
+    .result-table th {
+      color: var(--muted);
       background: #fafbfc;
-      font-size: 0.8rem;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .results-table td:first-child,
-    .results-table th:first-child {
-      padding-left: 22px;
-      text-align: left;
-    }
-
-    .results-table tr:last-child td {
-      border-bottom: 0;
-    }
-
-    .results-table tr.highlight-row {
-      background: rgba(31, 157, 112, 0.08);
-    }
-
-    .results-table .best {
-      color: var(--tad-invariant);
-      font-weight: 800;
-    }
-
-    .results-table .drop {
-      color: #b42318;
-      font-weight: 700;
-    }
-
-    .results-table .small-drop {
-      color: var(--tad-invariant);
-      font-weight: 800;
-    }
-
-    .protocol-box,
-    .repro-box,
-    .limitations-box {
-      max-width: 980px;
-      margin: 30px auto 0;
-      padding: 24px 26px;
-      border: 1px solid var(--tad-line);
-      border-left: 5px solid var(--tad-blue);
-      border-radius: 15px;
-      background: #ffffff;
-      box-shadow: 0 8px 22px rgba(31, 38, 48, 0.05);
-    }
-
-    .repro-box {
-      border-left-color: var(--tad-invariant);
-    }
-
-    .limitations-box {
-      border-left-color: var(--tad-directional);
-    }
-
-    .protocol-box h3,
-    .repro-box h3,
-    .limitations-box h3 {
-      margin: 0 0 10px;
-      color: var(--tad-ink);
-      font-size: 1.1rem;
-    }
-
-    .protocol-box p,
-    .repro-box p,
-    .limitations-box p {
-      margin: 8px 0 0;
-      color: var(--tad-muted);
-      font-size: 0.95rem;
-      line-height: 1.72;
-    }
-
-    .repro-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 16px;
-    }
-
-    .repro-item {
-      padding: 15px;
-      border-radius: 12px;
-      background: var(--tad-soft-bg);
-    }
-
-    .repro-item span {
-      display: block;
-      color: var(--tad-muted);
-      font-size: 0.76rem;
-      font-weight: 750;
+      font-size: 0.74rem;
+      font-weight: 850;
       letter-spacing: 0.06em;
       text-transform: uppercase;
     }
 
-    .repro-item strong {
-      display: block;
-      margin-top: 7px;
-      color: var(--tad-ink);
-      font-size: 0.98rem;
-      line-height: 1.45;
+    .result-table th:first-child,
+    .result-table td:first-child {
+      padding-left: 24px;
+      text-align: left;
     }
 
-    .citation-status {
-      max-width: 820px;
-      margin: 0 auto 18px;
-      color: var(--tad-muted);
-      font-size: 0.94rem;
-      line-height: 1.65;
+    .result-table tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .result-table .ours-row {
+      background: rgba(31, 157, 112, 0.075);
+    }
+
+    .best {
+      color: var(--green);
+      font-weight: 850;
+    }
+
+    .large-drop {
+      color: #c03129;
+      font-weight: 800;
+    }
+
+    .small-drop {
+      color: var(--green);
+      font-weight: 850;
+    }
+
+    .protocol-note {
+      margin: 17px 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
       text-align: center;
     }
 
-    @media (max-width: 760px) {
-      .relation-grid,
-      .metric-grid,
-      .repro-grid {
+    /* Citation */
+    .citation-wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: #ffffff;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .citation-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      background: #fafbfc;
+    }
+
+    .citation-top p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    #copy-bibtex {
+      cursor: pointer;
+      padding: 9px 13px;
+      border: 1px solid rgba(79, 111, 232, 0.24);
+      border-radius: 10px;
+      color: var(--blue-deep);
+      background: #ffffff;
+      font: inherit;
+      font-size: 0.84rem;
+      font-weight: 800;
+      transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    #copy-bibtex:hover {
+      transform: translateY(-1px);
+      color: #ffffff;
+      background: var(--blue);
+    }
+
+    #bibtex {
+      overflow-x: auto;
+      margin: 0;
+      padding: 24px;
+      color: #344054;
+      background: #ffffff;
+      font:
+        0.88rem/1.65 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", monospace;
+      white-space: pre;
+    }
+
+    /* Footer */
+    .tad-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      width: min(1160px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 28px 0 34px;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .tad-footer p {
+      margin: 0;
+    }
+
+    .tad-footer a {
+      color: var(--blue-deep);
+      font-weight: 750;
+    }
+
+    @media (max-width: 860px) {
+      .tad-nav-links {
+        gap: 15px;
+      }
+
+      .results-summary {
         grid-template-columns: 1fr;
       }
 
-      .relation-card {
-        min-height: auto;
+      .method-points {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .tad-shell,
+      .tad-nav-inner,
+      .tad-footer {
+        width: min(100% - 32px, 1160px);
       }
 
-      .transformation-strip {
+      .tad-nav-links {
+        display: none;
+      }
+
+      .tad-hero {
+        min-height: 570px;
+        padding: 135px 18px 95px;
+      }
+
+      .tad-hero h1 {
+        font-size: clamp(2rem, 10vw, 3rem);
+      }
+
+      .teaser-section {
+        margin-top: -38px;
+        padding: 0 16px 64px;
+      }
+
+      .teaser-wrap {
+        padding: 8px;
+        border-radius: 18px;
+      }
+
+      .teaser-video {
+        border-radius: 12px;
+      }
+
+      .tad-section {
+        padding: 70px 0;
+      }
+
+      .demo-grid {
         grid-template-columns: 1fr;
       }
 
-      .transform-arrow {
-        transform: rotate(90deg);
+      .tad-footer {
+        flex-direction: column;
+        align-items: flex-start;
       }
 
-      .protocol-box,
-      .repro-box,
-      .limitations-box {
-        padding: 20px;
+      .citation-top {
+        align-items: flex-start;
+        flex-direction: column;
       }
     }
   </style>
 
 </head>
 
-<body>
+<body class="tad-page">
   <main>
-    <!-- HERO -->
-    <section class="paper-hero" id="top">
-      <div class="hero-content">
-        <h1>
-          Not All Relations Rotate Alike:<br />
-          Transformation-Aware Decoupling for<br />
-          Viewpoint-Robust 3D Scene Graph Generation
-        </h1>
+    <!-- Navigation -->
+    <nav class="tad-nav" aria-label="Main navigation">
+      <div class="tad-nav-inner">
+        <a class="tad-brand" href="#top">T<span>A</span>D</a>
 
 ```
-    <!-- Keep anonymous until the review decision is public. -->
-    <p class="authors">Anonymous Submission</p>
+    <div class="tad-nav-links">
+      <a href="#motivation">Motivation</a>
+      <a href="#method">Method</a>
+      <a href="#demos">Demos</a>
+      <a href="#results">Results</a>
+      <a href="#citation">Citation</a>
+    </div>
+  </div>
+</nav>
 
-    <p class="affiliations">
-      Submitted to AAAI 2026
-    </p>
+<!-- Hero -->
+<section class="tad-hero" id="top">
+  <div class="hero-content">
+    <div class="hero-badge">VIEWPOINT-ROBUST 3D SCENE GRAPHS</div>
+
+    <h1>
+      Not All Relations Rotate Alike:<br />
+      Transformation-Aware Decoupling for<br />
+      Viewpoint-Robust 3D Scene Graph Generation
+    </h1>
+
+    <!-- Keep anonymous during review. -->
+    <p class="authors">Anonymous Submission</p>
+    <p class="affiliations">AAAI 2026</p>
 
     <div class="hero-links">
       <a
-        class="link-pill"
+        class="hero-link hero-link-primary"
         href="assets/pdf/paper.pdf"
         target="_blank"
         rel="noopener"
       >
-        📄 Paper
+        📄 Read Paper
       </a>
 
-      <span class="link-pill is-disabled" aria-disabled="true">
-        ⌘ Code coming soon
+      <span class="hero-link hero-link-disabled" aria-disabled="true">
+        ⌘ Code Coming Soon
       </span>
     </div>
   </div>
 </section>
 
-<!-- FULL-WIDTH TEASER VIDEO -->
+<!-- Teaser -->
 <section class="teaser-section">
-  <div class="wide-container">
+  <div class="teaser-wrap">
     <video
       class="teaser-video"
       autoplay
@@ -436,379 +873,291 @@
     </video>
 
     <p class="media-caption">
-      Same physical scene under different yaw viewpoints:
-      <span class="invariant-text">yaw-invariant predicates remain stable</span>,
-      while
-      <span class="directional-text">
-        directional predicates transform with the observation frame
-      </span>.
+      A rotating 3D scene and its predicted scene graph. As the observation frame changes,
+      the graph updates its <span class="directional-text">view-dependent directional relations</span>
+      while maintaining <span class="invariant-text">view-stable scene structure</span>.
     </p>
   </div>
 </section>
 
-<!-- KEY IDEA -->
-<section class="content-section key-idea-section" id="key-idea">
-  <div class="container">
-    <div class="section-title">
-      <p class="kicker">KEY IDEA</p>
-      <h2>What changes, and what stays stable?</h2>
+<!-- Motivation -->
+<section class="tad-section" id="motivation">
+  <div class="tad-shell">
+    <div class="section-heading">
+      <p class="section-kicker">MOTIVATION</p>
+      <h2>Not all relations should respond to rotation in the same way.</h2>
       <p>
-        Under yaw rotations, relations do not share one universal transformation rule.
-        Directional predicates should follow the observation frame, while most physical,
-        support, and semantic predicates should remain stable.
+        Under yaw viewpoint changes, directional predicates such as left, right, front,
+        and behind should change with the observation frame, whereas most support,
+        contact, and semantic predicates should remain stable.
       </p>
     </div>
 
-    <div class="relation-grid">
-      <article class="relation-card invariant-card">
-        <p class="relation-label">YAW-INVARIANT RELATIONS</p>
-        <h3>Stay stable across viewpoints</h3>
-
-        <div class="relation-tags">
-          <span>standing on</span>
-          <span>attached to</span>
-          <span>close by</span>
-          <span>supported by</span>
-        </div>
-
-        <p>
-          These predicates describe contact, support, distance, or semantic structure.
-          Their meaning should not change merely because the camera rotates around
-          the vertical axis.
-        </p>
-      </article>
-
-      <article class="relation-card directional-card">
-        <p class="relation-label">DIRECTIONAL RELATIONS</p>
-        <h3>Transform with the observation frame</h3>
-
-        <div class="relation-tags">
-          <span>left</span>
-          <span>right</span>
-          <span>front</span>
-          <span>behind</span>
-        </div>
-
-        <p>
-          A yaw rotation changes the horizontal observation axes. Directional predicates
-          should therefore transform predictably instead of remaining fixed in a shared
-          relation representation.
-        </p>
-      </article>
-    </div>
-
-    <div class="transformation-strip" aria-label="Directional transformation example">
-      <div class="transformation-example">
-        <p>0° viewpoint</p>
-        <strong>table is left of chair</strong>
-      </div>
-
-      <div class="transform-arrow" aria-hidden="true">→</div>
-
-      <div class="transformation-example">
-        <p>90° viewpoint</p>
-        <strong>table is front of chair</strong>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MOTIVATION -->
-<section class="content-section" id="motivation">
-  <div class="container">
-    <div class="section-title">
-      <p class="kicker">MOTIVATION</p>
-      <h2>Not all relations rotate alike.</h2>
-      <p>
-        Conventional 3D scene graph models learn all predicates in a single relation space.
-        This entangles two conflicting requirements: stable prediction for yaw-invariant
-        predicates and viewpoint-following prediction for directional predicates.
-      </p>
-    </div>
-
-    <figure class="long-figure">
+    <figure class="figure-card">
       <img
         src="assets/figures/motivation-long.png"
-        alt="Motivation illustration showing invariant and directional predicates under yaw rotations"
+        alt="Illustration of directional and yaw-invariant predicates under rotation"
         loading="lazy"
       />
+      <figcaption class="figure-caption">
+        TAD addresses the conflict between relation types with different transformation behavior
+        under yaw rotation.
+      </figcaption>
     </figure>
   </div>
 </section>
 
-<!-- METHOD -->
-<section class="content-section section-gray" id="method">
-  <div class="container">
-    <div class="section-title">
-      <p class="kicker">METHOD</p>
+<!-- Method -->
+<section class="tad-section tad-section-soft" id="method">
+  <div class="tad-shell">
+    <div class="section-heading">
+      <p class="section-kicker">METHOD</p>
       <h2>Transformation-Aware Decoupling.</h2>
       <p>
-        TAD combines a viewpoint-stable object encoder with two non-shared relation branches:
-        one for yaw-invariant cues and one for direction-sensitive cues.
+        TAD combines viewpoint-stable object representations with decoupled relation reasoning
+        for invariant and direction-sensitive predicates.
       </p>
     </div>
 
-    <figure class="long-figure">
+    <figure class="figure-card">
       <img
         src="assets/figures/method-long.png"
-        alt="Transformation-Aware Decoupling method diagram"
+        alt="Architecture diagram of Transformation-Aware Decoupling"
         loading="lazy"
       />
+      <figcaption class="figure-caption">
+        The framework separates relation reasoning through transformation-specific descriptors,
+        independent branches, and group-aware training objectives.
+      </figcaption>
     </figure>
 
-    <p class="project-note">
-      TAD decouples relation reasoning at three levels:
-      transformation-specific geometric descriptors, non-shared invariant and directional
-      relation branches, and group-aware auxiliary objectives. The two relation factors are
-      then merged for unified 26-class multi-label predicate prediction.
-    </p>
+    <div class="method-points">
+      <article class="method-point">
+        <div class="method-point-number">01</div>
+        <h3>Viewpoint-Stable Objects</h3>
+        <p>
+          A rotation-stable object encoder provides reliable object representations for
+          downstream relation reasoning.
+        </p>
+      </article>
+
+      <article class="method-point">
+        <div class="method-point-number">02</div>
+        <h3>Decoupled Relation Branches</h3>
+        <p>
+          Invariant and directional predicates are processed with non-shared relation branches
+          instead of one entangled relation space.
+        </p>
+      </article>
+
+      <article class="method-point">
+        <div class="method-point-number">03</div>
+        <h3>Unified Prediction</h3>
+        <p>
+          The two relation factors are merged to preserve the original 26-class multi-label
+          predicate prediction setting.
+        </p>
+      </article>
+    </div>
   </div>
 </section>
 
-<!-- DEMONSTRATIONS -->
-<section class="content-section" id="demos">
-  <div class="container">
-    <div class="section-title">
-      <p class="kicker">DEMONSTRATIONS</p>
-      <h2>Consistent scene graphs across yaw viewpoints.</h2>
+<!-- Demonstrations -->
+<section class="tad-section" id="demos">
+  <div class="tad-shell">
+    <div class="section-heading">
+      <p class="section-kicker">DEMONSTRATIONS</p>
+      <h2>Scene graphs evolve with the rotating viewpoint.</h2>
       <p>
-        We compare predictions for the same physical scene under rotated observation frames.
+        Each animation pairs a continuously rotating input scene with the corresponding
+        predicted 3D scene graph throughout the viewpoint change.
       </p>
     </div>
 
     <div class="demo-grid">
       <article class="demo-card">
-        <h3>Case 1 — Directional transformation under 90° rotation</h3>
+        <div class="demo-header">
+          <div>
+            <div class="demo-index">SCENE 01</div>
+            <h3>Rotating scene and dynamic relation graph</h3>
+          </div>
+        </div>
 
-        <video
-          class="demo-video"
-          autoplay
-          muted
-          loop
-          playsinline
-          controls
-          preload="metadata"
-          poster="assets/figures/scene-01-poster.jpg"
-        >
-          <source src="assets/demos/scene-01.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <div class="demo-video-wrap">
+          <video
+            class="demo-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            controls
+            preload="metadata"
+            poster="assets/figures/scene-01-poster.jpg"
+          >
+            <source src="assets/demos/scene-01.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
 
         <p>
-          Under a 90° yaw rotation, directional predicates undergo an axis exchange:
-          for example,
-          <span class="directional-text">left → front</span>.
-          Meanwhile,
-          <span class="invariant-text">standing on</span>
-          remains unchanged. TAD captures both behaviors in a unified scene graph.
+          The input 3D scene rotates continuously, while the scene graph below is updated
+          in sync with the current observation frame. The animation visualizes how predicted
+          relations evolve as the viewing direction changes.
         </p>
       </article>
 
       <article class="demo-card">
-        <h3>Case 2 — Baseline inconsistency under viewpoint rotation</h3>
+        <div class="demo-header">
+          <div>
+            <div class="demo-index">SCENE 02</div>
+            <h3>Continuous viewpoint change in a second scene</h3>
+          </div>
+        </div>
 
-        <video
-          class="demo-video"
-          autoplay
-          muted
-          loop
-          playsinline
-          controls
-          preload="metadata"
-          poster="assets/figures/scene-02-poster.jpg"
-        >
-          <source src="assets/demos/scene-02.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <div class="demo-video-wrap">
+          <video
+            class="demo-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            controls
+            preload="metadata"
+            poster="assets/figures/scene-02-poster.jpg"
+          >
+            <source src="assets/demos/scene-02.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
 
         <p>
-          A conventional baseline can appear plausible in the canonical view but becomes
-          inconsistent after rotation. TAD better preserves
-          <span class="invariant-text">attached to</span>
-          and
-          <span class="invariant-text">standing on</span>,
-          while updating directional predicates consistently with the observation frame.
+          A second rotating scene with its graph prediction shown throughout the motion.
+          The visualization highlights the viewpoint-dependent evolution of directional edges
+          while retaining the overall relational structure of the scene.
         </p>
       </article>
     </div>
   </div>
 </section>
 
-<!-- RESULTS -->
-<section class="content-section section-gray" id="results">
-  <div class="container">
-    <div class="section-title">
-      <p class="kicker">RESULTS</p>
-      <h2>Robust under evaluated yaw viewpoints.</h2>
+<!-- Results -->
+<section class="tad-section tad-section-soft" id="results">
+  <div class="tad-shell">
+    <div class="section-heading">
+      <p class="section-kicker">RESULTS</p>
+      <h2>Strong canonical performance, stable rotated-view predictions.</h2>
       <p>
-        TAD improves viewpoint robustness without training-time rotation augmentation,
-        while maintaining strong performance on the standard 3DSSG benchmark.
+        TAD substantially reduces performance degradation under yaw viewpoint changes,
+        without using training-time rotation augmentation.
       </p>
     </div>
 
     <div class="results-summary">
-      <div class="metric-grid">
-        <article class="metric-card">
-          <p class="metric-label">Overall R@50</p>
-          <p class="metric-value">86.0 → 84.5</p>
-          <p class="metric-delta">Only −1.5 at 90°</p>
-        </article>
-
-        <article class="metric-card">
-          <p class="metric-label">Directional mR@50</p>
-          <p class="metric-value">87.9 → 86.8</p>
-          <p class="metric-delta">Only −1.1 at 90°</p>
-        </article>
-
-        <article class="metric-card">
-          <p class="metric-label">Invariant mR@50</p>
-          <p class="metric-value">62.8 → 63.3</p>
-          <p class="metric-delta">Stable across viewpoints</p>
-        </article>
-      </div>
-
-      <div class="results-table-wrap">
-        <table class="results-table">
-          <thead>
-            <tr>
-              <th>Method</th>
-              <th>0° Overall R@50</th>
-              <th>90° Overall R@50</th>
-              <th>0° → 90° Change</th>
-              <th>90° Directional mR@50</th>
-              <th>90° Invariant mR@50</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>VL-SAT</td>
-              <td>79.9</td>
-              <td>68.2</td>
-              <td class="drop">−11.7</td>
-              <td>67.8</td>
-              <td>51.1</td>
-            </tr>
-
-            <tr>
-              <td>OCRL</td>
-              <td>82.0</td>
-              <td>69.9</td>
-              <td class="drop">−12.1</td>
-              <td>67.4</td>
-              <td>53.1</td>
-            </tr>
-
-            <tr class="highlight-row">
-              <td><strong>TAD (Ours)</strong></td>
-              <td class="best">86.0</td>
-              <td class="best">84.5</td>
-              <td class="small-drop">−1.5</td>
-              <td class="best">86.8</td>
-              <td class="best">63.3</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="protocol-box">
-        <h3>Viewpoint-Robust Evaluation Protocol</h3>
+      <article class="results-lead">
+        <p class="results-lead-label">MAIN TAKEAWAY</p>
+        <h3>
+          TAD reduces the 0° → 90° Overall R@50 drop to only 1.5 points.
+        </h3>
         <p>
-          We keep each physical scene fixed and express its point cloud in yaw-rotated
-          observation frames at 0°, 90°, 180°, and 270°. Directional predicate labels are
-          transformed by the corresponding deterministic permutation, while yaw-invariant
-          predicates remain unchanged.
+          The model maintains high directional and invariant relation accuracy when the
+          observation frame undergoes the challenging 90° axis exchange.
         </p>
-        <p>
-          The main robustness evaluation uses PredCls with ground-truth object labels and
-          reports Overall R@50, directional mR@50, and invariant mR@50. This isolates
-          predicate-level transformation behavior from object-classification errors.
-        </p>
+      </article>
+
+      <div class="result-metrics">
+        <article class="metric-card">
+          <div>
+            <p class="metric-card-label">Overall R@50</p>
+            <p class="metric-card-value">86.0 → 84.5</p>
+          </div>
+          <span class="metric-card-delta">−1.5 @ 90°</span>
+        </article>
+
+        <article class="metric-card">
+          <div>
+            <p class="metric-card-label">Directional mR@50</p>
+            <p class="metric-card-value">87.9 → 86.8</p>
+          </div>
+          <span class="metric-card-delta">−1.1 @ 90°</span>
+        </article>
+
+        <article class="metric-card">
+          <div>
+            <p class="metric-card-label">Invariant mR@50</p>
+            <p class="metric-card-value">62.8 → 63.3</p>
+          </div>
+          <span class="metric-card-delta">+0.5 @ 90°</span>
+        </article>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- REPRODUCIBILITY -->
-<section class="content-section" id="reproducibility">
-  <div class="container">
-    <div class="section-title">
-      <p class="kicker">REPRODUCIBILITY</p>
-      <h2>Experimental setting at a glance.</h2>
-      <p>
-        TAD is evaluated on the 3DSSG benchmark using a controlled yaw-viewpoint protocol.
-      </p>
+    <div class="table-card">
+      <table class="result-table">
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>0° Overall R@50</th>
+            <th>90° Overall R@50</th>
+            <th>0° → 90° Change</th>
+            <th>90° Directional mR@50</th>
+            <th>90° Invariant mR@50</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>VL-SAT</td>
+            <td>79.9</td>
+            <td>68.2</td>
+            <td class="large-drop">−11.7</td>
+            <td>67.8</td>
+            <td>51.1</td>
+          </tr>
+
+          <tr>
+            <td>OCRL</td>
+            <td>82.0</td>
+            <td>69.9</td>
+            <td class="large-drop">−12.1</td>
+            <td>67.4</td>
+            <td>53.1</td>
+          </tr>
+
+          <tr class="ours-row">
+            <td><strong>TAD (Ours)</strong></td>
+            <td class="best">86.0</td>
+            <td class="best">84.5</td>
+            <td class="small-drop">−1.5</td>
+            <td class="best">86.8</td>
+            <td class="best">63.3</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <div class="repro-box">
-      <h3>Core setup</h3>
-
-      <div class="repro-grid">
-        <div class="repro-item">
-          <span>Dataset</span>
-          <strong>3DSSG / 3RScan</strong>
-        </div>
-
-        <div class="repro-item">
-          <span>Predicate space</span>
-          <strong>26 predicates</strong>
-        </div>
-
-        <div class="repro-item">
-          <span>Directional group</span>
-          <strong>left, front, right, behind</strong>
-        </div>
-
-        <div class="repro-item">
-          <span>Training augmentation</span>
-          <strong>None for TAD</strong>
-        </div>
-      </div>
-
-      <p>
-        The final model uses a viewpoint-stable object encoder and transformation-aware
-        relation decoupling. Evaluation is performed across cardinal yaw viewpoints under
-        the same physical-scene setting.
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- LIMITATIONS -->
-<section class="content-section section-gray" id="limitations">
-  <div class="container">
-    <div class="section-title">
-      <p class="kicker">LIMITATIONS</p>
-      <h2>Scope of the current study.</h2>
-    </div>
-
-    <div class="limitations-box">
-      <h3>Current assumptions</h3>
-      <p>
-        TAD focuses on gravity-aligned indoor scenes and robustness to yaw rotations.
-        The current evaluation uses the closed 26-class 3DSSG predicate vocabulary and
-        standard instance masks. Future work can extend the framework to partial visibility,
-        occlusion, reconstruction noise, richer predicate vocabularies, and softer or
-        data-adaptive transformation grouping.
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- CITATION -->
-<section class="content-section citation-section" id="citation">
-  <div class="container citation-container">
-    <div class="section-title">
-      <p class="kicker">CITATION</p>
-      <h2>Use TAD in your work.</h2>
-    </div>
-
-    <p class="citation-status">
-      This citation is intentionally anonymous during review. Replace the author list,
-      venue, and publication details after the paper is publicly available.
+    <p class="protocol-note">
+      PredCls evaluation with ground-truth object labels under yaw-rotated observation frames.
+      Directional labels are transformed according to the corresponding viewpoint rotation.
     </p>
+  </div>
+</section>
 
-    <div class="bibtex-wrap">
-      <button id="copy-bibtex" type="button">Copy BibTeX</button>
+<!-- Citation -->
+<section class="tad-section" id="citation">
+  <div class="tad-shell">
+    <div class="section-heading">
+      <p class="section-kicker">CITATION</p>
+      <h2>Use TAD in your work.</h2>
+      <p>
+        The entry below remains anonymous during review and can be updated after publication.
+      </p>
+    </div>
+
+    <div class="citation-wrap">
+      <div class="citation-top">
+        <p>BibTeX</p>
+        <button id="copy-bibtex" type="button">Copy BibTeX</button>
+      </div>
 
       <pre id="bibtex">@misc{tad_3dsgg_2026,
 ```
@@ -823,8 +1172,8 @@ note   = {Under review}
 
   </main>
 
-  <footer>
-    <p>© <span id="year"></span> TAD Project Page</p>
+  <footer class="tad-footer">
+    <p>© <span id="year">2026</span> TAD Project Page</p>
     <a href="#top">Back to top ↑</a>
   </footer>
 
