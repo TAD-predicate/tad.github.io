@@ -16,21 +16,17 @@
       --ink: #162033;
       --ink-soft: #263449;
       --muted: #667085;
-      --muted-light: #98a2b3;
       --line: #e7ebf0;
       --paper: #ffffff;
-      --soft: #f7f9fc;
       --soft-blue: #f2f6ff;
       --soft-green: #f0fbf6;
       --blue: #4f6fe8;
       --blue-deep: #294bcf;
       --green: #1f9d70;
-      --orange: #e67f4d;
       --shadow-sm: 0 8px 24px rgba(21, 31, 48, 0.06);
       --shadow-md: 0 18px 44px rgba(21, 31, 48, 0.10);
       --radius-lg: 24px;
       --radius-md: 16px;
-      --radius-sm: 12px;
     }
 
     * {
@@ -196,16 +192,10 @@
     }
 
     .authors {
-      margin: 25px 0 6px;
+      margin: 25px 0 0;
       color: var(--ink-soft);
       font-size: 1rem;
       font-weight: 650;
-    }
-
-    .affiliations {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.92rem;
     }
 
     .hero-links {
@@ -281,7 +271,7 @@
     }
 
     .media-caption {
-      max-width: 900px;
+      max-width: 960px;
       margin: 16px auto 2px;
       color: var(--muted);
       font-size: 0.96rem;
@@ -430,10 +420,6 @@
     }
 
     .demo-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 16px;
       padding: 21px 22px 16px;
     }
 
@@ -840,7 +826,6 @@
     </h1>
 
     <p class="authors">Anonymous Submission</p>
-    <p class="affiliations">AAAI 2026</p>
 
     <div class="hero-links">
       <a
@@ -877,11 +862,11 @@
     </video>
 
     <p class="media-caption">
-      A rotating 3D scene and its predicted scene graph. As the observation frame changes,
-      the graph updates its
-      <span class="directional-blue">view-dependent directional relations</span>
-      while maintaining
-      <span class="invariant-black">view-stable scene structure</span>.
+      TAD robustly predicts scene graphs across changing viewpoints:
+      <span class="directional-blue">left, right, front, and behind</span>
+      adapt consistently to the observation frame, while
+      <span class="invariant-black">standing on and attached to</span>
+      remain stable under rotation.
     </p>
   </div>
 </section>
