@@ -336,81 +336,6 @@
       line-height: 1.75;
     }
 
-    /* Overview */
-    .overview-grid {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 24px;
-      align-items: stretch;
-    }
-
-    .overview-card {
-      padding: 30px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
-      background: #ffffff;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .overview-card h3 {
-      margin: 0 0 14px;
-      color: var(--ink);
-      font-size: 1.22rem;
-      letter-spacing: -0.02em;
-    }
-
-    .overview-card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.98rem;
-      line-height: 1.8;
-    }
-
-    .contribution-list {
-      display: grid;
-      gap: 14px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .contribution-list li {
-      display: grid;
-      grid-template-columns: 34px 1fr;
-      gap: 13px;
-      align-items: start;
-      padding: 15px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-md);
-      background: #ffffff;
-    }
-
-    .contribution-index {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      color: #ffffff;
-      background: var(--blue);
-      font-size: 0.8rem;
-      font-weight: 850;
-    }
-
-    .contribution-list h4 {
-      margin: 0 0 5px;
-      color: var(--ink);
-      font-size: 0.98rem;
-    }
-
-    .contribution-list p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.6;
-    }
-
     /* Figures */
     .figure-card {
       overflow: hidden;
@@ -896,7 +821,6 @@
     }
 
     @media (max-width: 960px) {
-      .overview-grid,
       .results-summary {
         grid-template-columns: 1fr;
       }
@@ -980,7 +904,6 @@
         <a class="tad-brand" href="#top">T<span>A</span>D</a>
 
         <div class="tad-nav-links">
-          <a href="#overview">Overview</a>
           <a href="#motivation">Motivation</a>
           <a href="#method">Method</a>
           <a href="#demos">Demos</a>
@@ -1044,60 +967,6 @@
           <span class="invariant-black">standing on and attached to</span>
           remain stable.
         </p>
-      </div>
-    </section>
-
-    <!-- Overview -->
-   <section class="tad-section" id="overview">
-      <div class="tad-shell">
-        <div class="section-heading">
-          <p class="section-kicker">CORE IDEA</p>
-          <h2>One scene, two transformation rules.</h2>
-          <p>
-            A viewpoint change does not affect every scene relation in the same way.
-            TAD explicitly models the different transformation behaviors of directional
-            and viewpoint-invariant predicates.
-          </p>
-        </div>
-    
-        <div class="overview-rule-grid">
-          <article class="overview-rule-card viewpoint-card">
-            <div class="overview-rule-icon">01</div>
-            <h3>Observation frame rotates</h3>
-            <p>
-              The same physical 3D scene can be observed from different yaw viewpoints,
-              changing the horizontal reference frame used to describe object relations.
-            </p>
-          </article>
-    
-          <article class="overview-rule-card directional-card">
-            <div class="overview-rule-icon">02</div>
-            <h3>Directional relations transform</h3>
-            <p>
-              Relations such as
-              <span class="directional-blue">left, right, front, and behind</span>
-              should change consistently with the current observation frame.
-            </p>
-          </article>
-    
-          <article class="overview-rule-card invariant-card">
-            <div class="overview-rule-icon">03</div>
-            <h3>Invariant relations stay stable</h3>
-            <p>
-              Relations such as
-              <span class="invariant-black">standing on and attached to</span>
-              describe physical or semantic structure and should remain stable across viewpoints.
-            </p>
-          </article>
-        </div>
-    
-        <div class="overview-tad-callout">
-          <div class="overview-tad-label">TAD</div>
-          <p>
-            Transformation-Aware Decoupling separates directional and invariant relation reasoning,
-            then merges both factors for unified 3D scene graph prediction.
-          </p>
-        </div>
       </div>
     </section>
 
