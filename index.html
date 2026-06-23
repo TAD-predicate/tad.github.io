@@ -6,8 +6,10 @@
   <meta name="description" content="Transformation-Aware Decoupling for Viewpoint-Robust 3D Scene Graph Generation." />
   <title>TAD: Not All Relations Rotate Alike</title>
 
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
+  <!-- Bulma & FontAwesome & Academicons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
@@ -49,24 +51,36 @@
       border: 1px solid rgba(0,0,0,0.04);
     }
     
-    /* 极简学术风 Method 卡片样式 */
+    /* 水印风 Method 卡片样式 */
     .method-card {
       background-color: #fafbfc;
       border: 1px solid #f0f2f5;
       border-radius: 12px;
       padding: 1.75rem 1.5rem;
       height: 100%;
-      transition: box-shadow 0.3s ease;
+      position: relative; /* 为水印定位准备 */
+      overflow: hidden;   /* 防止水印溢出卡片 */
+      z-index: 1;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
     }
     .method-card:hover {
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+      transform: translateY(-2px); /* 悬停时轻微上浮 */
     }
-    .method-number-text {
-      color: #3273dc;
+    
+    /* 巨型水印数字 CSS */
+    .method-watermark {
+      position: absolute;
+      bottom: -15px;
+      right: -5px;
+      font-size: 6.5rem; /* 巨型字号 */
       font-family: 'Google Sans', sans-serif;
-      font-size: 1.5rem;
-      font-weight: 800;
-      margin-right: 8px;
+      font-weight: 900;
+      color: rgba(50, 115, 220, 0.06); /* 6%的淡蓝色，极其微弱 */
+      z-index: -1; /* 藏在文字底层 */
+      user-select: none;
+      line-height: 1;
+      letter-spacing: -3px;
     }
     
     .metric-card {
@@ -96,6 +110,7 @@
 </head>
 <body>
 
+  <!-- Hero Section: 标题与作者区 -->
   <section class="hero mt-6 mb-4">
     <div class="hero-body">
       <div class="container is-max-desktop">
@@ -111,10 +126,12 @@
               <span class="is-size-3 has-text-grey">Transformation-Aware Decoupling for Viewpoint-Robust 3D Scene Graph Generation</span>
             </h1>
             
+            <!-- 作者排版预留区 -->
             <div class="is-size-5 publication-authors mt-4">
               <span class="author-block has-text-weight-semibold">Anonymous Submission</span>
             </div>
 
+            <!-- 按钮组 -->
             <div class="column has-text-centered mt-5">
               <div class="publication-links">
                 <span class="link-block">
@@ -144,6 +161,7 @@
     </div>
   </section>
 
+  <!-- Teaser Video Section -->
   <section class="hero teaser mb-6">
     <div class="container is-max-desktop">
       <div class="hero-body has-text-centered">
@@ -157,6 +175,7 @@
     </div>
   </section>
 
+  <!-- Abstract Section -->
   <section class="section">
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
@@ -172,6 +191,7 @@
     </div>
   </section>
 
+  <!-- Motivation Section -->
   <section class="section">
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
@@ -194,6 +214,7 @@
     </div>
   </section>
 
+  <!-- Method Section (修改：巨型水印排版) -->
   <section class="section">
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
@@ -212,40 +233,41 @@
             </p>
           </figure>
 
+          <!-- 巨型水印风卡片 -->
           <div class="columns is-centered has-text-left mt-6">
             <div class="column is-one-third">
               <div class="method-card">
-                <h3 class="title is-5 mb-3 is-flex is-align-items-baseline">
-                  <span class="method-number-text">01</span>
-                  Viewpoint-Stable Objects
-                </h3>
-                <p class="is-size-6 has-text-grey">A rotation-stable object encoder provides reliable object representations for downstream relation reasoning.</p>
+                <!-- 藏在底部的背景水印 -->
+                <div class="method-watermark">01</div>
+                <!-- 纯净的标题排版 -->
+                <h3 class="title is-5 mb-3">Viewpoint-Stable Objects</h3>
+                <p class="is-size-6 has-text-grey" style="line-height: 1.6;">A rotation-stable object encoder provides reliable object representations for downstream relation reasoning.</p>
               </div>
             </div>
+            
             <div class="column is-one-third">
               <div class="method-card">
-                <h3 class="title is-5 mb-3 is-flex is-align-items-baseline">
-                  <span class="method-number-text">02</span>
-                  Decoupled Relation Branches
-                </h3>
-                <p class="is-size-6 has-text-grey">Invariant and directional predicates are processed with non-shared relation branches instead of one entangled relation space.</p>
+                <div class="method-watermark">02</div>
+                <h3 class="title is-5 mb-3">Decoupled Relation Branches</h3>
+                <p class="is-size-6 has-text-grey" style="line-height: 1.6;">Invariant and directional predicates are processed with non-shared relation branches instead of one entangled relation space.</p>
               </div>
             </div>
+            
             <div class="column is-one-third">
               <div class="method-card">
-                <h3 class="title is-5 mb-3 is-flex is-align-items-baseline">
-                  <span class="method-number-text">03</span>
-                  Unified Prediction
-                </h3>
-                <p class="is-size-6 has-text-grey">The two relation factors are merged to preserve the original 26-class multi-label predicate prediction setting.</p>
+                <div class="method-watermark">03</div>
+                <h3 class="title is-5 mb-3">Unified Prediction</h3>
+                <p class="is-size-6 has-text-grey" style="line-height: 1.6;">The two relation factors are merged to preserve the original 26-class multi-label predicate prediction setting.</p>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Demonstrations Section -->
   <section class="section">
     <div class="container is-max-desktop">
       <div class="has-text-centered mb-6">
@@ -256,6 +278,7 @@
       </div>
 
       <div class="columns is-centered">
+        <!-- Demo 1 -->
         <div class="column is-half">
           <div class="box soft-shadow h-100" style="padding: 1.5rem;">
             <span class="tag is-info is-light mb-3 has-text-weight-bold">Scene 01</span>
@@ -269,6 +292,7 @@
           </div>
         </div>
 
+        <!-- Demo 2 -->
         <div class="column is-half">
           <div class="box soft-shadow h-100" style="padding: 1.5rem;">
             <span class="tag is-info is-light mb-3 has-text-weight-bold">Scene 02</span>
@@ -285,6 +309,7 @@
     </div>
   </section>
 
+  <!-- Results Section -->
   <section class="section">
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered mb-6">
@@ -294,6 +319,7 @@
         </div>
       </div>
 
+      <!-- Main Robustness Summary -->
       <div class="columns is-vcentered mb-6">
         <div class="column is-7">
           <div class="box has-background-link has-text-white soft-shadow" style="padding: 2.5rem; border: none;">
@@ -328,6 +354,7 @@
         <img class="soft-shadow" src="assets/figures/results-table.png" alt="Radar chart" style="max-width: 900px; width: 100%; margin: 0 auto; display: block;">
       </figure>
 
+      <!-- Main Robustness Table -->
       <div class="table-container soft-shadow">
         <table class="table is-striped is-hoverable is-fullwidth has-text-centered mb-0">
           <thead>
@@ -357,6 +384,7 @@
         </table>
       </div>
 
+      <!-- Ablation Table -->
       <h3 class="title is-4 mt-6 pt-5 has-text-centered">Ablation: where the robustness comes from</h3>
       <div class="table-container soft-shadow mt-5">
         <table class="table is-striped is-hoverable is-fullwidth has-text-centered mb-0">
@@ -386,6 +414,7 @@
     </div>
   </section>
 
+  <!-- BibTeX Section -->
   <section class="section pt-0" id="BibTeX">
     <div class="container is-max-desktop content">
       <h2 class="title">🔗 BibTeX</h2>
@@ -398,6 +427,7 @@
     </div>
   </section>
 
+  <!-- Footer -->
   <footer class="footer mt-6 pb-6">
     <div class="container">
       <div class="columns is-centered">
